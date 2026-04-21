@@ -12,9 +12,9 @@
 <style>
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   background: #050814;
-  color: white;
+  color: #ffffff;
 }
 
 .app {
@@ -28,30 +28,63 @@ body {
 
 /* HEADER */
 header {
-  padding: 16px;
-  text-align: center;
+  padding: 12px 16px 8px;
   border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 header h1 {
   margin: 0;
-  font-size: 20px;
+  font-size: 18px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
+
 header p {
-  margin: 6px 0 0;
+  margin: 0;
   font-size: 12px;
   color: #d0d4e0;
 }
 
+/* LANGUAGE SWITCHER */
+.lang-switcher {
+  display: flex;
+  gap: 6px;
+}
+
+.lang-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 0.5;
+  transition: opacity 0.2s, transform 0.1s;
+}
+.lang-btn.active {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
 /* HERO */
+.hero-wrapper {
+  position: relative;
+  padding: 14px;
+}
+
 .hero {
   position: relative;
   height: 260px;
   border-radius: 18px;
   overflow: hidden;
-  /* se la cover è in assets, usa: url("assets/cover.jpg") */
-  background-image: url("cover.jpg");
+  background-image: url("cover.jpg"); /* tua cover nella root */
   background-size: cover;
   background-position: center;
   box-shadow: 0 10px 25px rgba(0,0,0,0.7);
@@ -81,14 +114,15 @@ header p {
 /* BUTTON */
 .btn {
   display: block;
-  margin: 20px auto;
+  margin: 10px auto 0;
   padding: 12px 20px;
   background: #f4c542;
-  color: black;
+  color: #000;
   border-radius: 999px;
   border: none;
   font-weight: 700;
   cursor: pointer;
+  font-size: 14px;
 }
 
 /* CARD */
@@ -96,7 +130,7 @@ header p {
   background: #101522;
   border-radius: 16px;
   padding: 14px;
-  margin: 14px;
+  margin: 8px 14px 14px;
   border: 1px solid rgba(255,255,255,0.1);
 }
 .card h3 {
@@ -134,44 +168,60 @@ footer {
 <div class="app">
 
 <header>
-  <h1>I Giganti della Sardegna</h1>
-  <p>Mappa interattiva dei Nuraghi, delle Tombe dei Giganti e dei complessi cultuali della Sardegna.</p>
+  <div class="header-top">
+    <h1 id="headerTitle">I Giganti della Sardegna</h1>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="it">🇮🇹</button>
+      <button class="lang-btn" data-lang="en">🇬🇧</button>
+      <button class="lang-btn" data-lang="fr">🇫🇷</button>
+      <button class="lang-btn" data-lang="de">🇩🇪</button>
+      <button class="lang-btn" data-lang="es">🇪🇸</button>
+    </div>
+  </div>
+  <p id="headerSubtitle">
+    Mappa interattiva dei Nuraghi, delle Tombe dei Giganti e dei complessi cultuali della Sardegna.
+  </p>
 </header>
 
 <!-- HOME -->
 <div id="home">
-  <div class="hero"></div>
-
-  <div class="hero-text">
-    <h2>I Giganti della Sardegna</h2>
-    <p>In 3500 anni abbiamo creato questi influencer oltre il mare e le coste.</p>
+  <div class="hero-wrapper">
+    <div class="hero"></div>
+    <div class="hero-text">
+      <h2 id="heroTitle">I Giganti della Sardegna</h2>
+      <p id="heroSubtitle">
+        In 3500 anni abbiamo creato questi influencer oltre il mare e le coste.
+      </p>
+    </div>
   </div>
 
-  <button class="btn" onclick="openMap()">Esplora la mappa</button>
+  <button class="btn" id="exploreBtn" onclick="openMap()">Esplora la mappa</button>
 
   <div class="card">
-    <h3>Gli influencer della Sardegna</h3>
-    <p>• I Nuraghi – architetture di pietra e di cielo.</p>
-    <p>• Le Tombe dei Giganti – memoria collettiva scolpita nella roccia.</p>
-    <p>• I Pozzi e le Fonti sacre – l’acqua come rito.</p>
-    <p>• I Complessi cultuali e i villaggi – comunità, riti, paesaggi.</p>
+    <h3 id="card1Title">Gli influencer della Sardegna</h3>
+    <p id="card1Line1">• I Nuraghi – architetture di pietra e di cielo.</p>
+    <p id="card1Line2">• Le Tombe dei Giganti – memoria collettiva scolpita nella roccia.</p>
+    <p id="card1Line3">• I Pozzi e le Fonti sacre – l’acqua come rito.</p>
+    <p id="card1Line4">• I Complessi cultuali e i villaggi – comunità, riti, paesaggi.</p>
   </div>
 
   <div class="card">
-    <h3>Cooprogetta</h3>
-    <p>Invia una email precompilata per contribuire con idee e suggerimenti.</p>
-    <button class="btn" onclick="cooprogetta()">Cooprogetta</button>
+    <h3 id="card2Title">Cooprogetta</h3>
+    <p id="card2Text">
+      Invia una email precompilata per contribuire con idee e suggerimenti.
+    </p>
+    <button class="btn" id="card2Btn" onclick="cooprogetta()">Cooprogetta</button>
   </div>
 </div>
 
 <!-- MAPPA -->
 <div id="mappa" style="display:none; padding:16px;">
-  <h3>Mappa dei siti nuragici</h3>
-  <p>Tocca un punto per vedere nome, comune e tipologia.</p>
+  <h3 id="mapTitle">Mappa dei siti nuragici</h3>
+  <p id="mapSubtitle">Tocca un punto per vedere nome, comune e tipologia.</p>
 
   <div id="map"></div>
 
-  <button class="btn" onclick="backHome()">Torna alla Home</button>
+  <button class="btn" id="backBtn" onclick="backHome()">Torna alla Home</button>
 </div>
 
 <footer>
@@ -181,79 +231,81 @@ footer {
 </div>
 
 <script>
-// Navigazione
-function openMap() {
-  document.getElementById("home").style.display = "none";
-  document.getElementById("mappa").style.display = "block";
-  initMap();
-}
-function backHome() {
-  document.getElementById("mappa").style.display = "none";
-  document.getElementById("home").style.display = "block";
-}
-
-// Cooprogetta
-function cooprogetta() {
-  window.location.href =
-    "mailto:passamonti@passamonti.it?subject=Cooprogettazione%20I%20Giganti%20della%20Sardegna&body=Scrivi%20qui%20le%20tue%20idee...";
-}
-
-// Mappa Leaflet con tutti i siti del tuo file
-let mapInitialized = false;
-function initMap() {
-  if (mapInitialized) return;
-  mapInitialized = true;
-
-  const map = L.map("map").setView([40.0, 9.0], 7);
-
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 18
-  }).addTo(map);
-
-  const siti = [
-    { nome: "Tomba dei Giganti Coddu", comune: "Arzachena", lat: 41.0760, lng: 9.3970, tipo: "Tomba dei giganti" },
-    { nome: "Nuraghe Majori", comune: "Tempio Pausania", lat: 40.9000, lng: 9.1000, tipo: "Nuraghe" },
-    { nome: "Tempio a pozzo Predio Canopoli", comune: "Perfugas", lat: 40.8390, lng: 8.9000, tipo: "Pozzo sacro" },
-    { nome: "Nuraghe Palmavera", comune: "Alghero", lat: 40.5570, lng: 8.3190, tipo: "Nuraghe" },
-    { nome: "Complesso di Romanzesu", comune: "Bitti", lat: 40.4820, lng: 9.3750, tipo: "Complesso cultuale" },
-    { nome: "Santu Antine", comune: "Torralba", lat: 40.4210, lng: 8.7350, tipo: "Nuraghe complesso" },
-    { nome: "Nuraghe Appiu", comune: "Villanova Monteleone", lat: 40.5020, lng: 8.5800, tipo: "Nuraghe" },
-    { nome: "Fonte Sacra Su Tempiesu", comune: "Orune", lat: 40.3950, lng: 9.4000, tipo: "Fonte sacra" },
-    { nome: "Serra Orrios", comune: "Dorgali", lat: 40.2920, lng: 9.5880, tipo: "Villaggio nuragico" },
-    { nome: "Nuraghe Orolo", comune: "Bortigali", lat: 40.2680, lng: 8.8400, tipo: "Nuraghe" },
-    { nome: "Sa Sedda e Sos Carros", comune: "Oliena", lat: 40.2730, lng: 9.4050, tipo: "Santuario" },
-    { nome: "Nuraghe Losa", comune: "Abbasanta", lat: 40.1280, lng: 8.8200, tipo: "Nuraghe" },
-    { nome: "Tombe dei Giganti di Madau", comune: "Fonni", lat: 40.1130, lng: 9.2600, tipo: "Tombe dei giganti" },
-    { nome: "Complesso Santa Cristina", comune: "Paulilatino", lat: 40.0640, lng: 8.7800, tipo: "Complesso cultuale" },
-    { nome: "S’Arcu e Is Forros", comune: "Villagrande Strisaili", lat: 40.0000, lng: 9.4500, tipo: "Complesso cultuale" },
-    { nome: "Necropoli di Monte Prama", comune: "Cabras", lat: 39.9310, lng: 8.5300, tipo: "Necropoli" },
-    { nome: "Nuraghe Is Paras", comune: "Isili", lat: 39.7400, lng: 9.1000, tipo: "Nuraghe" },
-    { nome: "Domu de Orgia", comune: "Esterzili", lat: 39.7400, lng: 9.3300, tipo: "Tempio" },
-    { nome: "Su Nuraxi", comune: "Barumini", lat: 39.7000, lng: 9.0000, tipo: "Nuraghe complesso" },
-    { nome: "Complesso Santa Vittoria", comune: "Serri", lat: 39.7100, lng: 9.1000, tipo: "Complesso cultuale" },
-    { nome: "Tomba dei Giganti Sa Domu e S’Orku", comune: "Siddi", lat: 39.6600, lng: 8.9000, tipo: "Tomba dei giganti" },
-    { nome: "Nuraghe Arrubiu", comune: "Orroli", lat: 39.6600, lng: 9.3000, tipo: "Nuraghe complesso" },
-    { nome: "Nuraghe Cuccurada", comune: "Mogoro", lat: 39.6600, lng: 8.7400, tipo: "Nuraghe" },
-    { nome: "Nuraghe Genna Maria", comune: "Villanovaforru", lat: 39.6300, lng: 8.8500, tipo: "Nuraghe" },
-    { nome: "Su Mulinu", comune: "Villanovafranca", lat: 39.6300, lng: 8.9900, tipo: "Nuraghe" },
-    { nome: "Sant’Anastasia", comune: "Sardara", lat: 39.6200, lng: 8.8200, tipo: "Pozzo sacro" },
-    { nome: "Funtana Coberta", comune: "Ballao", lat: 39.5800, lng: 9.3500, tipo: "Pozzo sacro" },
-    { nome: "Nuraghe Seruci", comune: "Gonnesa", lat: 39.2500, lng: 8.4200, tipo: "Nuraghe complesso" },
-    { nome: "Tomba dei Giganti Is Concias", comune: "Quartucciu", lat: 39.2600, lng: 9.3500, tipo: "Tomba dei giganti" },
-    { nome: "Nuraghe Diana", comune: "Quartu Sant’Elena", lat: 39.2300, lng: 9.2400, tipo: "Nuraghe" },
-    { nome: "Nuraghe Arresi", comune: "Sant’Anna Arresi", lat: 39.0000, lng: 8.6300, tipo: "Nuraghe" },
-    { nome: "Nuraghe Ponte", comune: "Dualchi", lat: 40.2300, lng: 8.9000, tipo: "Nuraghe" }
-  ];
-
-  siti.forEach(s => {
-    L.marker([s.lat, s.lng])
-      .addTo(map)
-      .bindPopup(
-        `<b>${s.nome}</b><br>${s.comune}<br><i>${s.tipo}</i>`
-      );
-  });
-}
-</script>
-
-</body>
-</html>
+// =======================
+// DATI MULTILINGUA
+// =======================
+const translations = {
+  it: {
+    headerTitle: "I Giganti della Sardegna",
+    headerSubtitle: "Mappa interattiva dei Nuraghi, delle Tombe dei Giganti e dei complessi cultuali della Sardegna.",
+    heroTitle: "I Giganti della Sardegna",
+    heroSubtitle: "In 3500 anni abbiamo creato questi influencer oltre il mare e le coste.",
+    exploreBtn: "Esplora la mappa",
+    card1Title: "Gli influencer della Sardegna",
+    card1Line1: "• I Nuraghi – architetture di pietra e di cielo.",
+    card1Line2: "• Le Tombe dei Giganti – memoria collettiva scolpita nella roccia.",
+    card1Line3: "• I Pozzi e le Fonti sacre – l’acqua come rito.",
+    card1Line4: "• I Complessi cultuali e i villaggi – comunità, riti, paesaggi.",
+    card2Title: "Cooprogetta",
+    card2Text: "Invia una email precompilata per contribuire con idee e suggerimenti.",
+    card2Btn: "Cooprogetta",
+    mapTitle: "Mappa dei siti nuragici",
+    mapSubtitle: "Tocca un punto per vedere nome, comune e tipologia.",
+    backBtn: "Torna alla Home",
+    typeLabels: {
+      nuraghe: "Nuraghe",
+      nuraghe_complesso: "Nuraghe complesso",
+      tomba_giganti: "Tomba dei giganti",
+      tombe_giganti: "Tombe dei giganti",
+      pozzo_sacro: "Pozzo sacro",
+      fonte_sacra: "Fonte sacra",
+      complesso_cultuale: "Complesso cultuale",
+      villaggio: "Villaggio nuragico",
+      necropoli: "Necropoli",
+      santuario: "Santuario",
+      tempio: "Tempio"
+    },
+    popupMore: "Apri la pagina su Wikipedia"
+  },
+  en: {
+    headerTitle: "The Giants of Sardinia",
+    headerSubtitle: "Interactive map of Nuraghi, Giants' Tombs and sacred complexes across Sardinia.",
+    heroTitle: "The Giants of Sardinia",
+    heroSubtitle: "In 3,500 years we created these influencers beyond sea and coasts.",
+    exploreBtn: "Explore the map",
+    card1Title: "The influencers of Sardinia",
+    card1Line1: "• Nuraghi – architectures of stone and sky.",
+    card1Line2: "• Giants' Tombs – collective memory carved in rock.",
+    card1Line3: "• Sacred wells and springs – water as ritual.",
+    card1Line4: "• Cult complexes and villages – communities, rites, landscapes.",
+    card2Title: "Co-design",
+    card2Text: "Send a pre-filled email to contribute with ideas and suggestions.",
+    card2Btn: "Co-design",
+    mapTitle: "Map of Nuragic sites",
+    mapSubtitle: "Tap a point to see name, municipality and type.",
+    backBtn: "Back to Home",
+    typeLabels: {
+      nuraghe: "Nuraghe",
+      nuraghe_complesso: "Complex nuraghe",
+      tomba_giganti: "Giants' tomb",
+      tombe_giganti: "Giants' tombs",
+      pozzo_sacro: "Sacred well",
+      fonte_sacra: "Sacred spring",
+      complesso_cultuale: "Cult complex",
+      villaggio: "Nuragic village",
+      necropoli: "Necropolis",
+      santuario: "Sanctuary",
+      tempio: "Temple"
+    },
+    popupMore: "Open the page on Wikipedia"
+  },
+  fr: {
+    headerTitle: "Les Géants de Sardaigne",
+    headerSubtitle: "Carte interactive des nuraghes, tombes des géants et complexes sacrés de Sardaigne.",
+    heroTitle: "Les Géants de Sardaigne",
+    heroSubtitle: "En 3 500 ans, nous avons créé ces influenceurs au-delà de la mer et des côtes.",
+    exploreBtn: "Explorer la carte",
+    card1Title: "Les influenceurs de la Sardaigne",
+    card1Line1: "• Les nuraghes – architectures de pierre et de ciel.",
+    card1Line2: "• Les tombes des géants – mémoire collective gravée dans la roche.",
+    card1Line
