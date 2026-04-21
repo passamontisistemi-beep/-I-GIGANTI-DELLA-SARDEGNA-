@@ -1,49 +1,39 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>I Giganti della Sardegna - Definitiva</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<style>
-body{margin:0;font-family:system-ui,sans-serif;background:#050814;color:#fff} .app{max-width:430px;margin:auto;min-height:100vh;background:#0b1020;display:flex;flex-direction:column} header{padding:16px;text-align:center;border-bottom:1px solid rgba(255,255,255,.1)} h1{margin:0;font-size:20px} .lang-switcher{display:flex;justify-content:center;gap:10px;margin-top:10px}.lang-btn{background:none;border:0;font-size:22px;cursor:pointer;opacity:.5}.lang-btn.active{opacity:1}.hero{height:260px;margin:16px;border-radius:20px;overflow:hidden;background:url('cover.jpg') center/cover;position:relative;box-shadow:0 10px 25px rgba(0,0,0,.6)}.hero:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(0,0,0,.9))}.hero-text{position:absolute;bottom:20px;left:16px;right:16px}.btn{display:block;margin:18px auto;padding:13px 22px;background:#f4c542;color:#000;border:0;border-radius:999px;font-weight:800;cursor:pointer}.card{margin:14px;padding:14px;border-radius:16px;background:#101522;border:1px solid rgba(255,255,255,.08)}#map{height:360px;border-radius:16px}.hidden{display:none} footer{padding:10px;text-align:right;font-size:10px;color:#cfd4e0}
-</style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>I Giganti della Sardegna</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<style>html,body{margin:0;height:100%;font-family:Arial,sans-serif}#map{height:55vh}.ticker{white-space:nowrap;overflow:hidden}.ticker span{display:inline-block;padding-left:100%;animation:scroll 28s linear infinite}@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}</style>
 </head>
-<body>
-<div class='app'>
-<header>
-<h1 id='headerTitle'>I Giganti della Sardegna</h1>
-<p id='headerSubtitle'>Mappa interattiva del patrimonio nuragico della Sardegna.</p>
-<div class='lang-switcher'>
-<button class='lang-btn active' data-lang='it'>🇮🇹</button><button class='lang-btn' data-lang='en'>🇬🇧</button><button class='lang-btn' data-lang='fr'>🇫🇷</button><button class='lang-btn' data-lang='de'>🇩🇪</button><button class='lang-btn' data-lang='es'>🇪🇸</button>
-</div>
-</header>
-<div id='home'>
-<div class='hero'><div class='hero-text'><h2 id='heroTitle'>I Giganti della Sardegna</h2><p id='heroSubtitle'>3500 anni di storia scolpiti nella pietra.</p></div></div>
-<button class='btn' id='exploreBtn' onclick='openMap()'>Esplora la mappa</button>
-<div class='card'><h3>Patrimonio Unico</h3><p>Nuraghi, Tombe dei Giganti, Pozzi Sacri, Villaggi e Santuari distribuiti in tutta l'isola.</p></div>
-<div class='card'><h3>Cooprogetta</h3><p>Invia idee e suggerimenti per migliorare l'app.</p><button class='btn' onclick='cooprogetta()'>Cooprogetta</button></div>
-</div>
-<div id='mappa' class='hidden' style='padding:16px'>
-<h3 id='mapTitle'>Mappa Archeologica</h3>
-<p id='mapSubtitle'>Tocca un punto per scoprire il sito.</p>
+<body class="bg-stone-100 text-stone-900">
+<div id='home' class='min-h-screen flex flex-col'>
+<header class='text-center p-4 bg-black/60 text-white'>
+<div class='flex justify-center gap-3 text-2xl'><button>🇮🇹</button><button>🇬🇧</button><button>🇫🇷</button><button>🇩🇪</button><button>🇪🇸</button></div>
+<h1 class='text-3xl font-bold mt-3'>I Giganti della Sardegna</h1><p>Mappa interattiva dei Nuraghi, Domus de Janas, Borghi e luoghi della storia e archeologia della Sardegna</p></header>
+<section class='flex-1 bg-cover bg-center flex flex-col items-center justify-center text-white p-6' style="background-image:url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80')">
+<div class='bg-black/45 p-6 rounded-3xl text-center'><button onclick="showMap()" class='bg-amber-500 text-black font-bold px-6 py-3 rounded-full'>Esplora la mappa</button><p class='mt-6'>I Nuraghi • Le Domus de Janas • I Borghi • I Comuni di prossimità</p></div>
+</section>
+<footer class='bg-stone-900 text-white p-2 text-sm'><div class='ticker'><span>Questo Feed RSS scorrevole conterrà le notizie dell’ultima ora delle maggiori agenzie giornalistiche italiane, notizie dei Comuni vicini, suggerimenti enogastronomici e tradizioni della settimana.</span></div><div class='text-center mt-2'><b>PASSAMONTI</b>_COMMUNICATION</div></footer></div>
+<div id='app' class='hidden min-h-screen flex flex-col'>
+<header class='p-3 bg-emerald-800 text-white text-center'><h1 class='text-2xl font-bold'>I Giganti della Sardegna</h1><p class='text-sm'>Nuraghi • Domus de Janas • Borghi • Città di prossimità</p><div class='flex flex-wrap justify-center gap-2 mt-2'><button onclick="filterType('all')">Tutti</button><button onclick="filterType('nuraghi')">Nuraghi</button><button onclick="filterType('domus')">Domus</button><button onclick="filterType('borghi')">Borghi</button><button onclick="gpsNearby()">GPS</button><button onclick="speakSearch()">Dagli voce</button><a class='bg-white text-black px-2 rounded' href='mailto:passamonti@passamonti.it?subject=Proposta%20di%20miglioramento'>Cooprogetta</a></div></header>
 <div id='map'></div>
-<button class='btn' id='backBtn' onclick='backHome()'>Torna alla Home</button>
-</div>
-<footer>PASSAMONTI <strong>COMMUNICATION</strong></footer>
-</div>
+<footer class='bg-stone-900 text-white p-2 text-sm mt-auto'><div class='ticker'><span>Feed RSS dimostrativo: notizie Sardegna, eventi, sapori, tradizioni, archeologia e turismo.</span></div><div class='text-center mt-2'><b>PASSAMONTI</b>_COMMUNICATION</div></footer></div>
 <script>
-const translations={it:{headerTitle:'I Giganti della Sardegna',exploreBtn:'Esplora la mappa',backBtn:'Torna alla Home'},en:{headerTitle:'The Giants of Sardinia',exploreBtn:'Explore map',backBtn:'Back Home'},fr:{headerTitle:'Les Géants de Sardaigne',exploreBtn:'Explorer la carte',backBtn:'Retour'},de:{headerTitle:'Die Giganten Sardiniens',exploreBtn:'Karte öffnen',backBtn:'Zurück'},es:{headerTitle:'Los Gigantes de Cerdeña',exploreBtn:'Explorar mapa',backBtn:'Volver'}};
-const siti=[
-['Tomba dei Giganti Coddu','Arzachena',41.076,9.397,'Tomba dei giganti'],['Nuraghe Majori','Tempio Pausania',40.9,9.1,'Nuraghe'],['Predio Canopoli','Perfugas',40.839,8.9,'Pozzo sacro'],['Palmavera','Alghero',40.557,8.319,'Nuraghe'],['Romanzesu','Bitti',40.482,9.375,'Complesso cultuale'],['Santu Antine','Torralba',40.421,8.735,'Nuraghe complesso'],['Appiu','Villanova Monteleone',40.502,8.58,'Nuraghe'],['Su Tempiesu','Orune',40.395,9.4,'Fonte sacra'],['Serra Orrios','Dorgali',40.292,9.588,'Villaggio'],['Orolo','Bortigali',40.268,8.84,'Nuraghe'],['Sa Sedda e Sos Carros','Oliena',40.273,9.405,'Santuario'],['Losa','Abbasanta',40.128,8.82,'Nuraghe'],['Madau','Fonni',40.113,9.26,'Tombe dei giganti'],['Santa Cristina','Paulilatino',40.064,8.78,'Complesso cultuale'],['Monte Prama','Cabras',39.931,8.53,'Necropoli'],['Is Paras','Isili',39.74,9.1,'Nuraghe'],['Su Nuraxi','Barumini',39.7,9,'Nuraghe complesso'],['Santa Vittoria','Serri',39.71,9.1,'Complesso cultuale'],['Arrubiu','Orroli',39.66,9.3,'Nuraghe complesso'],['Cuccurada','Mogoro',39.66,8.74,'Nuraghe'],['Genna Maria','Villanovaforru',39.63,8.85,'Nuraghe'],['Sant’Anastasia','Sardara',39.62,8.82,'Pozzo sacro'],['Funtana Coberta','Ballao',39.58,9.35,'Pozzo sacro'],['Seruci','Gonnesa',39.25,8.42,'Nuraghe'],['Is Concias','Quartucciu',39.26,9.35,'Tomba dei giganti'],['Diana','Quartu Sant’Elena',39.23,9.24,'Nuraghe'],['Arresi','Sant’Anna Arresi',39,8.63,'Nuraghe']];
-let map,mapReady=false;
-function setLanguage(lang){document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('active',b.dataset.lang===lang));const t=translations[lang];headerTitle.textContent=t.headerTitle;exploreBtn.textContent=t.exploreBtn;backBtn.textContent=t.backBtn;}
-function initMap(){if(mapReady)return;mapReady=true;map=L.map('map').setView([40,9],7);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18}).addTo(map);siti.forEach(s=>{L.circleMarker([s[2],s[3]],{radius:7,color:'#f33',fillColor:'#f33',fillOpacity:.9}).addTo(map).bindPopup('<b>'+s[0]+'</b><br>'+s[1]+'<br>'+s[4]+'<br><a target=_blank href=https://it.wikipedia.org/wiki/'+encodeURIComponent(s[0])+'>Wikipedia</a>')})}
-function openMap(){home.classList.add('hidden');mappa.classList.remove('hidden');initMap();setTimeout(()=>map.invalidateSize(),200)}
-function backHome(){mappa.classList.add('hidden');home.classList.remove('hidden')}
-function cooprogetta(){location.href='mailto:info@example.com?subject=Cooprogetta%20Giganti%20della%20Sardegna'}
-document.querySelectorAll('.lang-btn').forEach(btn=>btn.onclick=()=>setLanguage(btn.dataset.lang));setLanguage('it');
-</script>
-</body>
-</html>
+const points=[
+{name:'Su Nuraxi',type:'nuraghi',lat:39.705,lng:8.994,url:'https://it.wikipedia.org/wiki/Su_Nuraxi'},
+{name:'Anghelu Ruju',type:'domus',lat:40.601,lng:8.29,url:'https://it.wikipedia.org/wiki/Anghelu_Ruju'},
+{name:'Bosa',type:'borghi',lat:40.299,lng:8.498,url:'https://it.wikipedia.org/wiki/Bosa'},
+{name:'Barumini',type:'comuni',lat:39.704,lng:8.999,url:'https://it.wikipedia.org/wiki/Barumini'}];
+let map,markers=[];
+function showMap(){document.getElementById('home').classList.add('hidden');document.getElementById('app').classList.remove('hidden');setTimeout(initMap,50)}
+function initMap(){if(map)return;map=L.map('map').setView([40.1,9],8);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);render(points)}
+function color(t){return {nuraghi:'red',domus:'blue',borghi:'gold',comuni:'white'}[t]||'green'}
+function render(data){markers.forEach(m=>map.removeLayer(m));markers=[];data.forEach(p=>{let m=L.circleMarker([p.lat,p.lng],{radius:8,color:color(p.type),fillColor:color(p.type),fillOpacity:p.type==='comuni'?0:0.9,weight:2}).addTo(map).on('click',()=>{map.setView([p.lat,p.lng],12);window.open(p.url,'_blank')});markers.push(m)})}
+function filterType(t){render(t==='all'?points:points.filter(p=>p.type===t))}
+function gpsNearby(){navigator.geolocation.getCurrentPosition(pos=>{const {latitude,longitude}=pos.coords;const near=points.filter(p=>dist(latitude,longitude,p.lat,p.lng)<=50);if(near.length){render(near);map.setView([near[0].lat,near[0].lng],10);new Audio('https://actions.google.com/sounds/v1/alarms/beep_short.ogg').play();}})}
+function dist(a,b,c,d){const R=6371,x=(c-a)*Math.PI/180,y=(d-b)*Math.PI/180;const q=Math.sin(x/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(y/2)**2;return 2*R*Math.asin(Math.sqrt(q))}
+function speakSearch(){const r=new(window.SpeechRecognition||window.webkitSpeechRecognition)();r.lang='it-IT';r.onresult=e=>{const t=e.results[0][0].transcript.toLowerCase();if(t.includes('nurag'))filterType('nuraghi');if(t.includes('domus'))filterType('domus');if(t.includes('borgh'))filterType('borghi')};r.start()}
+</script></body></html>
