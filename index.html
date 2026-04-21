@@ -10,9 +10,7 @@
   rel="stylesheet"
   href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
 />
-<script
-  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-</script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <style>
 :root {
@@ -36,6 +34,7 @@ body {
   color: var(--text);
 }
 
+/* Contenitore tipo smartphone */
 .app {
   max-width: 430px;
   margin: 0 auto;
@@ -258,3 +257,241 @@ main {
   flex: 1;
   padding: 6px 8px;
   border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: #0b1428;
+  color: var(--soft);
+  font-size: 10px;
+  cursor: pointer;
+}
+
+/* Footer RSS */
+footer {
+  padding: 6px 10px 8px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 10px;
+  color: var(--soft);
+}
+
+.rss {
+  margin-bottom: 4px;
+  font-size: 10px;
+}
+
+.brand {
+  text-align: right;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.brand span:first-child {
+  font-weight: 700;
+  font-family: Arial, sans-serif;
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header>
+  <h1>I Giganti della Sardegna</h1>
+  <p>Mappa interattiva dei Nuraghi, delle Domus de Janas, dei Borghi e dei luoghi della storia e archeologia della Sardegna.</p>
+  <div class="lang">
+    <button>IT</button><button>EN</button><button>FR</button><button>DE</button><button>ES</button>
+  </div>
+</header>
+
+<main>
+  <!-- HOME -->
+  <section id="page-home" class="page">
+    <div class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-kicker">In 3500 anni abbiamo creato</div>
+        <div class="hero-title">I Giganti della Sardegna</div>
+        <div class="hero-sub">
+          In 3500 anni abbiamo creato questi influencer oltre il mare e le coste.
+        </div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="openMap()">🗺️ Esplora la mappa</button>
+
+    <div class="card protagonisti">
+      <h3>Gli influencer della Sardegna</h3>
+      <p>I Nuraghi – architetture di pietra e di cielo.</p>
+      <p>Le Domus de Janas – case delle fate e degli antenati.</p>
+      <p>I Borghi – trame di vicoli, piazze e racconti.</p>
+      <p>I Comuni di prossimità – comunità che custodiscono e rinnovano il patrimonio.</p>
+    </div>
+
+    <div class="card">
+      <h3>Contenuti</h3>
+      <p class="list-title">Lista dei Nuraghi</p>
+      <p>Coordinate, descrizioni dei siti tratte da Wikipedia, Wikiloc, Wikivoyage.</p>
+      <p class="list-title">Lista delle Domus de Janas</p>
+      <p>Coordinate, descrizioni e contesti paesaggistici.</p>
+      <p class="list-title">Lista dei Borghi</p>
+      <p>Coordinate, descrizioni e connessioni con i bandi regionali.</p>
+      <p class="list-title">Lista dei Comuni vicini ai Nuraghi</p>
+      <p>Dati da Tuttitalia, Istat, siti comunali e regionali.</p>
+      <p class="list-title">Memorie</p>
+      <p>Elementi tratti dalla webapp “Memorie”: foto, disegni, interviste e riprese delle scuole.</p>
+    </div>
+
+    <div class="card">
+      <h3>Cooprogetta</h3>
+      <p>Un tasto che attiva una email precompilata rivolta a PASSAMONTI_COMMUNICATION per suggerimenti, progetti e idee.</p>
+      <button class="btn-secondary" onclick="cooprogetta()">✉️ Cooprogetta con noi</button>
+    </div>
+  </section>
+
+  <!-- MAPPA -->
+  <section id="page-map" class="page hidden">
+    <div class="card">
+      <h3>I Giganti della Sardegna</h3>
+      <p>Nuraghi, Domus de Janas, Borghi, Città di prossimità ai Nuraghi – tutti cliccabili e filtrabili.</p>
+
+      <div class="filters">
+        <button class="filter-btn active" data-filter="all">Tutti</button>
+        <button class="filter-btn" data-filter="nuraghe">Nuraghi</button>
+        <button class="filter-btn" data-filter="domus">Domus de Janas</button>
+        <button class="filter-btn" data-filter="borgo">Borghi</button>
+        <button class="filter-btn" data-filter="comune">Comuni di prossimità</button>
+      </div>
+
+      <div class="map-toolbar">
+        <button onclick="voiceDemo()">🎧 Dagli voce</button>
+        <button onclick="gpsDemo()">📍 GPS 50 km</button>
+      </div>
+
+      <div id="map"></div>
+
+      <button class="btn-secondary" style="margin-top:10px;" onclick="cooprogettaMappa()">✉️ Cooprogetta</button>
+      <button class="btn-secondary" style="margin-top:6px;" onclick="backHome()">⬅️ Torna alla Home</button>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="rss">
+    Questo Feed RSS scorrevole conterrà le notizie dell’ultima ora delle maggiori agenzie giornalistiche italiane, le notizie tratte dai siti dei Comuni che si trovano nelle vicinanze di questi elementi iconici della Sardegna ma anche suggerimenti per l’esplorazione del patrimonio enogastronomico posseduto, delle tradizioni più importanti in essere nella settimana.
+  </div>
+  <div class="brand">
+    <span>PASSAMONTI</span><span>_COMMUNICATION</span>
+  </div>
+</footer>
+
+</div>
+
+<script>
+// Navigazione
+function openMap() {
+  document.getElementById("page-home").classList.add("hidden");
+  document.getElementById("page-map").classList.remove("hidden");
+  initMap();
+}
+
+function backHome() {
+  document.getElementById("page-map").classList.add("hidden");
+  document.getElementById("page-home").classList.remove("hidden");
+}
+
+// Cooprogetta
+function cooprogetta() {
+  window.location.href =
+    "mailto:passamonti@passamonti.it?subject=Nostra partecipazione alla cooprogettazione&body=Gentile PASSAMONTI_COMMUNICATION,%0D%0A%0D%0Acon la presente desideriamo contribuire alla cooprogettazione della webapp 'I Giganti della Sardegna' con i seguenti suggerimenti:%0D%0A- ...%0D%0A- ...%0D%0A%0D%0ACordiali saluti,%0D%0A";
+}
+
+function cooprogettaMappa() {
+  window.location.href =
+    "mailto:passamonti@passamonti.it?subject=Proposta di miglioramento&body=Gentile PASSAMONTI_COMMUNICATION,%0D%0A%0D%0Ain riferimento alla mappa interattiva 'I Giganti della Sardegna' proponiamo i seguenti miglioramenti:%0D%0A- ...%0D%0A- ...%0D%0A%0D%0ACordiali saluti,%0D%0A";
+}
+
+// Mappa
+let mapInitialized = false;
+let mapInstance;
+let markers = [];
+const poiData = [
+  { type: "nuraghe", name: "Nuraghe Arketipo", lat: 40.1, lng: 9.1, wiki: "https://it.wikipedia.org/wiki/Nuraghe" },
+  { type: "domus", name: "Domus de Janas Demo", lat: 40.4, lng: 9.4, wiki: "https://it.wikipedia.org/wiki/Domus_de_Janas" },
+  { type: "borgo", name: "Borgo Narrativo", lat: 39.9, lng: 9.0, wiki: "https://it.wikipedia.org/wiki/Borgo" },
+  { type: "comune", name: "Comune di Prossimità", lat: 40.0, lng: 9.2, wiki: "https://it.wikipedia.org/wiki/Comune" }
+];
+
+function initMap() {
+  if (mapInitialized) return;
+  mapInitialized = true;
+
+  mapInstance = L.map("map").setView([40.0, 9.0], 7);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 18
+  }).addTo(mapInstance);
+
+  poiData.forEach(p => {
+    const color =
+      p.type === "nuraghe" ? "#4ec3ff" :
+      p.type === "domus" ? "#ff6f61" :
+      p.type === "borgo" ? "#7bd389" :
+      "#c792ea";
+
+    const marker = L.circleMarker([p.lat, p.lng], {
+      radius: 8,
+      color: color,
+      fillColor: p.type === "comune" ? "transparent" : color,
+      fillOpacity: p.type === "comune" ? 0 : 0.9,
+      weight: p.type === "comune" ? 2 : 1
+    }).addTo(mapInstance);
+
+    marker.bindPopup(
+      `<b>${p.name}</b><br><a href="${p.wiki}" target="_blank">Apri Wikipedia</a>`
+    );
+
+    markers.push({ marker, data: p });
+  });
+
+  // Filtri
+  document.querySelectorAll(".filter-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      const filter = btn.dataset.filter;
+
+      markers.forEach(m => {
+        if (filter === "all" || m.data.type === filter) {
+          m.marker.addTo(mapInstance);
+        } else {
+          mapInstance.removeLayer(m.marker);
+        }
+      });
+    });
+  });
+}
+
+// GPS demo
+function gpsDemo() {
+  if (!navigator.geolocation) {
+    alert("GPS non disponibile");
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      mapInstance.setView([lat, lng], 11);
+      alert("Visualizzazione centrata sulla tua posizione.\nGli elementi entro 30–50 km saranno evidenziati in una versione completa.");
+    },
+    () => alert("Impossibile ottenere la posizione.")
+  );
+}
+
+// Dagli voce (placeholder)
+function voiceDemo() {
+  alert("In una versione completa questo pulsante attiverebbe una guida vocale e un chatbot connesso a Wikipedia, Wikivoyage, Wikiloc, Istat e siti regionali.");
+}
+</script>
+
+</body>
+</html>
