@@ -5,36 +5,18 @@
 <title>I Giganti della Sardegna</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- Leaflet da CDN -->
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <style>
-:root {
-  --bg: #050814;
-  --card: #101522;
-  --accent: #f4c542;
-  --accent2: #4ec3ff;
-  --accent3: #ff6f61;
-  --accent4: #7bd389;
-  --accent5: #c792ea;
-  --text: #f7f7f7;
-  --soft: #d0d4e0;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: var(--bg);
-  color: var(--text);
+  font-family: system-ui, sans-serif;
+  background: #050814;
+  color: white;
 }
 
-/* Contenitore tipo smartphone */
 .app {
   max-width: 430px;
   margin: 0 auto;
@@ -44,248 +26,106 @@ body {
   flex-direction: column;
 }
 
-/* Header */
+/* HEADER */
 header {
-  padding: 12px 14px 8px;
+  padding: 16px;
+  text-align: center;
   border-bottom: 1px solid rgba(255,255,255,0.1);
 }
-
 header h1 {
-  font-size: 18px;
+  margin: 0;
+  font-size: 20px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
-
 header p {
-  margin-top: 4px;
-  font-size: 11px;
-  color: var(--soft);
+  margin: 6px 0 0;
+  font-size: 12px;
+  color: #d0d4e0;
 }
 
-.lang {
-  margin-top: 8px;
-  display: flex;
-  justify-content: center;
-  gap: 4px;
-}
-
-.lang button {
-  border-radius: 4px;
-  border: 1px solid rgba(255,255,255,0.4);
-  background: rgba(0,0,0,0.3);
-  color: #fff;
-  font-size: 10px;
-  padding: 3px 6px;
-  cursor: pointer;
-}
-
-/* Pagine */
-main {
-  flex: 1;
-  position: relative;
-  overflow: hidden;
-}
-
-.page {
-  position: absolute;
-  inset: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 10px 14px 70px;
-}
-
-.hidden { display: none; }
-
-/* Hero */
+/* HERO */
 .hero {
   position: relative;
-  height: 240px;
+  height: 260px;
   border-radius: 18px;
   overflow: hidden;
-  background: #000;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.7);
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background-image: url("assets/cover.jpg");
+  /* se la cover è in assets, usa: url("assets/cover.jpg") */
+  background-image: url("cover.jpg");
   background-size: cover;
   background-position: center;
-  filter: saturate(1.1) contrast(1.05) brightness(0.9);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.7);
 }
-
-.hero-overlay {
+.hero::after {
+  content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.1), rgba(0,0,0,0.85));
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.85));
 }
-
-.hero-content {
+.hero-text {
   position: absolute;
-  inset: auto 14px 14px 14px;
+  bottom: 20px;
+  left: 16px;
+  right: 16px;
+}
+.hero-text h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+.hero-text p {
+  margin: 6px 0 0;
+  font-size: 12px;
 }
 
-.hero-kicker {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  color: #ffefb3;
-}
-
-.hero-title {
-  margin-top: 4px;
-  font-size: 20px;
-  font-weight: 800;
-}
-
-.hero-sub {
-  margin-top: 4px;
-  font-size: 11px;
-}
-
-/* Pulsante principale */
-.btn-primary {
-  margin: 16px auto 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 10px 20px;
+/* BUTTON */
+.btn {
+  display: block;
+  margin: 20px auto;
+  padding: 12px 20px;
+  background: #f4c542;
+  color: black;
   border-radius: 999px;
   border: none;
-  background: linear-gradient(135deg, var(--accent), #ffb347);
-  color: #000;
-  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
 }
 
-/* Card */
+/* CARD */
 .card {
-  margin-top: 12px;
-  padding: 10px 10px 8px;
+  background: #101522;
   border-radius: 16px;
-  background: var(--card);
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.6);
+  padding: 14px;
+  margin: 14px;
+  border: 1px solid rgba(255,255,255,0.1);
 }
-
 .card h3 {
-  font-size: 12px;
+  margin: 0 0 8px;
+  font-size: 14px;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
   color: #ffefb3;
-  margin-bottom: 6px;
 }
-
 .card p {
-  font-size: 11px;
-  color: var(--soft);
-  margin-bottom: 4px;
+  margin: 4px 0;
+  font-size: 12px;
+  color: #d0d4e0;
 }
 
-/* Liste protagonisti */
-.protagonisti p::before {
-  content: "• ";
-  color: var(--accent);
-}
-
-/* Contenuti */
-.list-title {
-  font-weight: 600;
-  margin-top: 6px;
-}
-
-/* Bottoni secondari */
-.btn-secondary {
-  margin-top: 8px;
-  width: 100%;
-  padding: 8px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--accent2);
-  background: #0b1428;
-  color: #ffefb3;
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-/* Mappa */
+/* MAPPA */
 #map {
   width: 100%;
-  height: 260px;
+  height: 320px;
   border-radius: 14px;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
-/* Filtri */
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 8px;
-}
-
-.filter-btn {
-  flex: 1 1 calc(50% - 4px);
-  padding: 6px 8px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: #0b1428;
-  color: var(--soft);
-  font-size: 10px;
-  cursor: pointer;
-}
-
-.filter-btn.active {
-  border-color: var(--accent);
-  background: #2b2410;
-  color: #ffefb3;
-}
-
-/* Toolbar mappa */
-.map-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 6px;
-  margin-top: 6px;
-}
-
-.map-toolbar button {
-  flex: 1;
-  padding: 6px 8px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.2);
-  background: #0b1428;
-  color: var(--soft);
-  font-size: 10px;
-  cursor: pointer;
-}
-
-/* Footer RSS */
+/* FOOTER */
 footer {
-  padding: 6px 10px 8px;
+  padding: 10px;
+  font-size: 10px;
+  color: #d0d4e0;
   border-top: 1px solid rgba(255,255,255,0.1);
-  font-size: 10px;
-  color: var(--soft);
-}
-
-.rss {
-  margin-bottom: 4px;
-  font-size: 10px;
-}
-
-.brand {
   text-align: right;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.brand span:first-child {
-  font-weight: 700;
-  font-family: Arial, sans-serif;
 }
 </style>
 </head>
@@ -295,92 +135,47 @@ footer {
 
 <header>
   <h1>I Giganti della Sardegna</h1>
-  <p>Mappa interattiva dei Nuraghi, delle Domus de Janas, dei Borghi e dei luoghi della storia e archeologia della Sardegna.</p>
-  <div class="lang">
-    <button>IT</button><button>EN</button><button>FR</button><button>DE</button><button>ES</button>
-  </div>
+  <p>Mappa interattiva dei Nuraghi, delle Tombe dei Giganti e dei complessi cultuali della Sardegna.</p>
 </header>
 
-<main>
-  <!-- HOME -->
-  <section id="page-home" class="page">
-    <div class="hero">
-      <div class="hero-bg"></div>
-      <div class="hero-overlay"></div>
-      <div class="hero-content">
-        <div class="hero-kicker">In 3500 anni abbiamo creato</div>
-        <div class="hero-title">I Giganti della Sardegna</div>
-        <div class="hero-sub">
-          In 3500 anni abbiamo creato questi influencer oltre il mare e le coste.
-        </div>
-      </div>
-    </div>
+<!-- HOME -->
+<div id="home">
+  <div class="hero"></div>
 
-    <button class="btn-primary" onclick="openMap()">🗺️ Esplora la mappa</button>
+  <div class="hero-text">
+    <h2>I Giganti della Sardegna</h2>
+    <p>In 3500 anni abbiamo creato questi influencer oltre il mare e le coste.</p>
+  </div>
 
-    <div class="card protagonisti">
-      <h3>Gli influencer della Sardegna</h3>
-      <p>I Nuraghi – architetture di pietra e di cielo.</p>
-      <p>Le Domus de Janas – case delle fate e degli antenati.</p>
-      <p>I Borghi – trame di vicoli, piazze e racconti.</p>
-      <p>I Comuni di prossimità – comunità che custodiscono e rinnovano il patrimonio.</p>
-    </div>
+  <button class="btn" onclick="openMap()">Esplora la mappa</button>
 
-    <div class="card">
-      <h3>Contenuti</h3>
-      <p class="list-title">Lista dei Nuraghi</p>
-      <p>Coordinate, descrizioni dei siti tratte da Wikipedia, Wikiloc, Wikivoyage.</p>
-      <p class="list-title">Lista delle Domus de Janas</p>
-      <p>Coordinate, descrizioni e contesti paesaggistici.</p>
-      <p class="list-title">Lista dei Borghi</p>
-      <p>Coordinate, descrizioni e connessioni con i bandi regionali.</p>
-      <p class="list-title">Lista dei Comuni vicini ai Nuraghi</p>
-      <p>Dati da Tuttitalia, Istat, siti comunali e regionali.</p>
-      <p class="list-title">Memorie</p>
-      <p>Elementi tratti dalla webapp “Memorie”: foto, disegni, interviste e riprese delle scuole.</p>
-    </div>
+  <div class="card">
+    <h3>Gli influencer della Sardegna</h3>
+    <p>• I Nuraghi – architetture di pietra e di cielo.</p>
+    <p>• Le Tombe dei Giganti – memoria collettiva scolpita nella roccia.</p>
+    <p>• I Pozzi e le Fonti sacre – l’acqua come rito.</p>
+    <p>• I Complessi cultuali e i villaggi – comunità, riti, paesaggi.</p>
+  </div>
 
-    <div class="card">
-      <h3>Cooprogetta</h3>
-      <p>Un tasto che attiva una email precompilata rivolta a PASSAMONTI_COMMUNICATION per suggerimenti, progetti e idee.</p>
-      <button class="btn-secondary" onclick="cooprogetta()">✉️ Cooprogetta con noi</button>
-    </div>
-  </section>
+  <div class="card">
+    <h3>Cooprogetta</h3>
+    <p>Invia una email precompilata per contribuire con idee e suggerimenti.</p>
+    <button class="btn" onclick="cooprogetta()">Cooprogetta</button>
+  </div>
+</div>
 
-  <!-- MAPPA -->
-  <section id="page-map" class="page hidden">
-    <div class="card">
-      <h3>I Giganti della Sardegna</h3>
-      <p>Nuraghi, Domus de Janas, Borghi, Città di prossimità ai Nuraghi – tutti cliccabili e filtrabili.</p>
+<!-- MAPPA -->
+<div id="mappa" style="display:none; padding:16px;">
+  <h3>Mappa dei siti nuragici</h3>
+  <p>Tocca un punto per vedere nome, comune e tipologia.</p>
 
-      <div class="filters">
-        <button class="filter-btn active" data-filter="all">Tutti</button>
-        <button class="filter-btn" data-filter="nuraghe">Nuraghi</button>
-        <button class="filter-btn" data-filter="domus">Domus de Janas</button>
-        <button class="filter-btn" data-filter="borgo">Borghi</button>
-        <button class="filter-btn" data-filter="comune">Comuni di prossimità</button>
-      </div>
+  <div id="map"></div>
 
-      <div class="map-toolbar">
-        <button onclick="voiceDemo()">🎧 Dagli voce</button>
-        <button onclick="gpsDemo()">📍 GPS 50 km</button>
-      </div>
-
-      <div id="map"></div>
-
-      <button class="btn-secondary" style="margin-top:10px;" onclick="cooprogettaMappa()">✉️ Cooprogetta</button>
-      <button class="btn-secondary" style="margin-top:6px;" onclick="backHome()">⬅️ Torna alla Home</button>
-    </div>
-  </section>
-</main>
+  <button class="btn" onclick="backHome()">Torna alla Home</button>
+</div>
 
 <footer>
-  <div class="rss">
-    Questo Feed RSS scorrevole conterrà le notizie dell’ultima ora delle maggiori agenzie giornalistiche italiane, le notizie tratte dai siti dei Comuni che si trovano nelle vicinanze di questi elementi iconici della Sardegna ma anche suggerimenti per l’esplorazione del patrimonio enogastronomico posseduto, delle tradizioni più importanti in essere nella settimana.
-  </div>
-  <div class="brand">
-    <span>PASSAMONTI</span><span>_COMMUNICATION</span>
-  </div>
+  PASSAMONTI <strong>COMMUNICATION</strong>
 </footer>
 
 </div>
@@ -388,108 +183,75 @@ footer {
 <script>
 // Navigazione
 function openMap() {
-  document.getElementById("page-home").classList.add("hidden");
-  document.getElementById("page-map").classList.remove("hidden");
+  document.getElementById("home").style.display = "none";
+  document.getElementById("mappa").style.display = "block";
   initMap();
 }
-
 function backHome() {
-  document.getElementById("page-map").classList.add("hidden");
-  document.getElementById("page-home").classList.remove("hidden");
+  document.getElementById("mappa").style.display = "none";
+  document.getElementById("home").style.display = "block";
 }
 
 // Cooprogetta
 function cooprogetta() {
   window.location.href =
-    "mailto:passamonti@passamonti.it?subject=Nostra partecipazione alla cooprogettazione&body=Gentile PASSAMONTI_COMMUNICATION,%0D%0A%0D%0Acon la presente desideriamo contribuire alla cooprogettazione della webapp 'I Giganti della Sardegna' con i seguenti suggerimenti:%0D%0A- ...%0D%0A- ...%0D%0A%0D%0ACordiali saluti,%0D%0A";
+    "mailto:passamonti@passamonti.it?subject=Cooprogettazione%20I%20Giganti%20della%20Sardegna&body=Scrivi%20qui%20le%20tue%20idee...";
 }
 
-function cooprogettaMappa() {
-  window.location.href =
-    "mailto:passamonti@passamonti.it?subject=Proposta di miglioramento&body=Gentile PASSAMONTI_COMMUNICATION,%0D%0A%0D%0Ain riferimento alla mappa interattiva 'I Giganti della Sardegna' proponiamo i seguenti miglioramenti:%0D%0A- ...%0D%0A- ...%0D%0A%0D%0ACordiali saluti,%0D%0A";
-}
-
-// Mappa
+// Mappa Leaflet con tutti i siti del tuo file
 let mapInitialized = false;
-let mapInstance;
-let markers = [];
-const poiData = [
-  { type: "nuraghe", name: "Nuraghe Arketipo", lat: 40.1, lng: 9.1, wiki: "https://it.wikipedia.org/wiki/Nuraghe" },
-  { type: "domus", name: "Domus de Janas Demo", lat: 40.4, lng: 9.4, wiki: "https://it.wikipedia.org/wiki/Domus_de_Janas" },
-  { type: "borgo", name: "Borgo Narrativo", lat: 39.9, lng: 9.0, wiki: "https://it.wikipedia.org/wiki/Borgo" },
-  { type: "comune", name: "Comune di Prossimità", lat: 40.0, lng: 9.2, wiki: "https://it.wikipedia.org/wiki/Comune" }
-];
-
 function initMap() {
   if (mapInitialized) return;
   mapInitialized = true;
 
-  mapInstance = L.map("map").setView([40.0, 9.0], 7);
+  const map = L.map("map").setView([40.0, 9.0], 7);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 18
-  }).addTo(mapInstance);
+  }).addTo(map);
 
-  poiData.forEach(p => {
-    const color =
-      p.type === "nuraghe" ? "#4ec3ff" :
-      p.type === "domus" ? "#ff6f61" :
-      p.type === "borgo" ? "#7bd389" :
-      "#c792ea";
+  const siti = [
+    { nome: "Tomba dei Giganti Coddu", comune: "Arzachena", lat: 41.0760, lng: 9.3970, tipo: "Tomba dei giganti" },
+    { nome: "Nuraghe Majori", comune: "Tempio Pausania", lat: 40.9000, lng: 9.1000, tipo: "Nuraghe" },
+    { nome: "Tempio a pozzo Predio Canopoli", comune: "Perfugas", lat: 40.8390, lng: 8.9000, tipo: "Pozzo sacro" },
+    { nome: "Nuraghe Palmavera", comune: "Alghero", lat: 40.5570, lng: 8.3190, tipo: "Nuraghe" },
+    { nome: "Complesso di Romanzesu", comune: "Bitti", lat: 40.4820, lng: 9.3750, tipo: "Complesso cultuale" },
+    { nome: "Santu Antine", comune: "Torralba", lat: 40.4210, lng: 8.7350, tipo: "Nuraghe complesso" },
+    { nome: "Nuraghe Appiu", comune: "Villanova Monteleone", lat: 40.5020, lng: 8.5800, tipo: "Nuraghe" },
+    { nome: "Fonte Sacra Su Tempiesu", comune: "Orune", lat: 40.3950, lng: 9.4000, tipo: "Fonte sacra" },
+    { nome: "Serra Orrios", comune: "Dorgali", lat: 40.2920, lng: 9.5880, tipo: "Villaggio nuragico" },
+    { nome: "Nuraghe Orolo", comune: "Bortigali", lat: 40.2680, lng: 8.8400, tipo: "Nuraghe" },
+    { nome: "Sa Sedda e Sos Carros", comune: "Oliena", lat: 40.2730, lng: 9.4050, tipo: "Santuario" },
+    { nome: "Nuraghe Losa", comune: "Abbasanta", lat: 40.1280, lng: 8.8200, tipo: "Nuraghe" },
+    { nome: "Tombe dei Giganti di Madau", comune: "Fonni", lat: 40.1130, lng: 9.2600, tipo: "Tombe dei giganti" },
+    { nome: "Complesso Santa Cristina", comune: "Paulilatino", lat: 40.0640, lng: 8.7800, tipo: "Complesso cultuale" },
+    { nome: "S’Arcu e Is Forros", comune: "Villagrande Strisaili", lat: 40.0000, lng: 9.4500, tipo: "Complesso cultuale" },
+    { nome: "Necropoli di Monte Prama", comune: "Cabras", lat: 39.9310, lng: 8.5300, tipo: "Necropoli" },
+    { nome: "Nuraghe Is Paras", comune: "Isili", lat: 39.7400, lng: 9.1000, tipo: "Nuraghe" },
+    { nome: "Domu de Orgia", comune: "Esterzili", lat: 39.7400, lng: 9.3300, tipo: "Tempio" },
+    { nome: "Su Nuraxi", comune: "Barumini", lat: 39.7000, lng: 9.0000, tipo: "Nuraghe complesso" },
+    { nome: "Complesso Santa Vittoria", comune: "Serri", lat: 39.7100, lng: 9.1000, tipo: "Complesso cultuale" },
+    { nome: "Tomba dei Giganti Sa Domu e S’Orku", comune: "Siddi", lat: 39.6600, lng: 8.9000, tipo: "Tomba dei giganti" },
+    { nome: "Nuraghe Arrubiu", comune: "Orroli", lat: 39.6600, lng: 9.3000, tipo: "Nuraghe complesso" },
+    { nome: "Nuraghe Cuccurada", comune: "Mogoro", lat: 39.6600, lng: 8.7400, tipo: "Nuraghe" },
+    { nome: "Nuraghe Genna Maria", comune: "Villanovaforru", lat: 39.6300, lng: 8.8500, tipo: "Nuraghe" },
+    { nome: "Su Mulinu", comune: "Villanovafranca", lat: 39.6300, lng: 8.9900, tipo: "Nuraghe" },
+    { nome: "Sant’Anastasia", comune: "Sardara", lat: 39.6200, lng: 8.8200, tipo: "Pozzo sacro" },
+    { nome: "Funtana Coberta", comune: "Ballao", lat: 39.5800, lng: 9.3500, tipo: "Pozzo sacro" },
+    { nome: "Nuraghe Seruci", comune: "Gonnesa", lat: 39.2500, lng: 8.4200, tipo: "Nuraghe complesso" },
+    { nome: "Tomba dei Giganti Is Concias", comune: "Quartucciu", lat: 39.2600, lng: 9.3500, tipo: "Tomba dei giganti" },
+    { nome: "Nuraghe Diana", comune: "Quartu Sant’Elena", lat: 39.2300, lng: 9.2400, tipo: "Nuraghe" },
+    { nome: "Nuraghe Arresi", comune: "Sant’Anna Arresi", lat: 39.0000, lng: 8.6300, tipo: "Nuraghe" },
+    { nome: "Nuraghe Ponte", comune: "Dualchi", lat: 40.2300, lng: 8.9000, tipo: "Nuraghe" }
+  ];
 
-    const marker = L.circleMarker([p.lat, p.lng], {
-      radius: 8,
-      color: color,
-      fillColor: p.type === "comune" ? "transparent" : color,
-      fillOpacity: p.type === "comune" ? 0 : 0.9,
-      weight: p.type === "comune" ? 2 : 1
-    }).addTo(mapInstance);
-
-    marker.bindPopup(
-      `<b>${p.name}</b><br><a href="${p.wiki}" target="_blank">Apri Wikipedia</a>`
-    );
-
-    markers.push({ marker, data: p });
+  siti.forEach(s => {
+    L.marker([s.lat, s.lng])
+      .addTo(map)
+      .bindPopup(
+        `<b>${s.nome}</b><br>${s.comune}<br><i>${s.tipo}</i>`
+      );
   });
-
-  // Filtri
-  document.querySelectorAll(".filter-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      const filter = btn.dataset.filter;
-
-      markers.forEach(m => {
-        if (filter === "all" || m.data.type === filter) {
-          m.marker.addTo(mapInstance);
-        } else {
-          mapInstance.removeLayer(m.marker);
-        }
-      });
-    });
-  });
-}
-
-// GPS demo
-function gpsDemo() {
-  if (!navigator.geolocation) {
-    alert("GPS non disponibile");
-    return;
-  }
-  navigator.geolocation.getCurrentPosition(
-    pos => {
-      const lat = pos.coords.latitude;
-      const lng = pos.coords.longitude;
-      mapInstance.setView([lat, lng], 11);
-      alert("Visualizzazione centrata sulla tua posizione.\nGli elementi entro 30–50 km saranno evidenziati in una versione completa.");
-    },
-    () => alert("Impossibile ottenere la posizione.")
-  );
-}
-
-// Dagli voce (placeholder)
-function voiceDemo() {
-  alert("In una versione completa questo pulsante attiverebbe una guida vocale e un chatbot connesso a Wikipedia, Wikivoyage, Wikiloc, Istat e siti regionali.");
 }
 </script>
 
