@@ -176,7 +176,7 @@ footer {
     </p>
     <button class="btn" id="card2Btn" onclick="cooprogetta()">Cooprogetta</button>
   </div>
-</div>
+</div> <!-- fine home -->
 
 <div id="mappa" style="display:none; padding:16px;">
   <h3 id="mapTitle">Mappa dei siti nuragici</h3>
@@ -189,9 +189,12 @@ footer {
   PASSAMONTI <strong>COMMUNICATION</strong>
 </footer>
 
-</div>
+</div> <!-- fine app -->
 
 <script>
+/* ============================
+   TRADUZIONI INTERFACCIA
+============================ */
 const translations = {
   it: {
     headerTitle: "I Giganti della Sardegna",
@@ -265,12 +268,9 @@ const translations = {
   }
 };
 
-const siti = [
-  { nome: "Nuraghe Losa", comune: "Abbasanta", lat: 40.128, lng: 8.82 },
-  { nome: "Su Nuraxi", comune: "Barumini", lat: 39.7, lng: 9.0 },
-  { nome: "Santu Antine", comune: "Torralba", lat: 40.421, lng: 8.735 }
-];
-
+/* ============================
+   FUNZIONI DI INTERFACCIA
+============================ */
 let currentLang = "it";
 let mapInitialized = false;
 let mapInstance = null;
@@ -288,65 +288,48 @@ function setLanguage(lang) {
   document.getElementById("heroSubtitle").innerText = t.heroSubtitle;
   document.getElementById("exploreBtn").innerText = t.exploreBtn;
   document.getElementById("card2Title").innerText = t.card2Title;
-  document.getElementById("card2Text").innerText = t.card2Text;
-  document.getElementById("card2Btn").innerText = t.card2Btn;
-  document.getElementById("mapTitle").innerText = t.mapTitle;
-  document.getElementById("mapSubtitle").innerText = t.mapSubtitle;
-  document.getElementById("backBtn").innerText = t.backBtn;
+  document.getElementById("card2Text").innerText
+/* ============================
+   LISTA COMPLETA DEI 32 SITI
+============================ */
+const siti = [
+  { nome: "Tomba dei Giganti Coddu", comune: "Arzachena", lat: 41.0760, lng: 9.3970, tipo: "Tomba dei giganti" },
+  { nome: "Nuraghe Majori", comune: "Tempio Pausania", lat: 40.9000, lng: 9.1000, tipo: "Nuraghe" },
+  { nome: "Tempio a pozzo Predio Canopoli", comune: "Perfugas", lat: 40.8390, lng: 8.9000, tipo: "Pozzo sacro" },
+  { nome: "Nuraghe Palmavera", comune: "Alghero", lat: 40.5570, lng: 8.3190, tipo: "Nuraghe" },
+  { nome: "Complesso di Romanzesu", comune: "Bitti", lat: 40.4820, lng: 9.3750, tipo: "Complesso cultuale" },
+  { nome: "Santu Antine", comune: "Torralba", lat: 40.4210, lng: 8.7350, tipo: "Nuraghe complesso" },
+  { nome: "Nuraghe Appiu", comune: "Villanova Monteleone", lat: 40.5020, lng: 8.5800, tipo: "Nuraghe" },
+  { nome: "Fonte Sacra Su Tempiesu", comune: "Orune", lat: 40.3950, lng: 9.4000, tipo: "Fonte sacra" },
+  { nome: "Serra Orrios", comune: "Dorgali", lat: 40.2920, lng: 9.5880, tipo: "Villaggio nuragico" },
+  { nome: "Nuraghe Orolo", comune: "Bortigali", lat: 40.2680, lng: 8.8400, tipo: "Nuraghe" },
+  { nome: "Sa Sedda e Sos Carros", comune: "Oliena", lat: 40.2730, lng: 9.4050, tipo: "Santuario" },
+  { nome: "Nuraghe Losa", comune: "Abbasanta", lat: 40.1280, lng: 8.8200, tipo: "Nuraghe" },
+  { nome: "Tombe dei Giganti di Madau", comune: "Fonni", lat: 40.1130, lng: 9.2600, tipo: "Tombe dei giganti" },
+  { nome: "Complesso Santa Cristina", comune: "Paulilatino", lat: 40.0640, lng: 8.7800, tipo: "Complesso cultuale" },
+  { nome: "S’Arcu e Is Forros", comune: "Villagrande Strisaili", lat: 40.0000, lng: 9.4500, tipo: "Complesso cultuale" },
+  { nome: "Necropoli di Monte Prama", comune: "Cabras", lat: 39.9310, lng: 8.5300, tipo: "Necropoli" },
+  { nome: "Nuraghe Is Paras", comune: "Isili", lat: 39.7400, lng: 9.1000, tipo: "Nuraghe" },
+  { nome: "Domu de Orgia", comune: "Esterzili", lat: 39.7400, lng: 9.3300, tipo: "Tempio" },
+  { nome: "Su Nuraxi", comune: "Barumini", lat: 39.7000, lng: 9.0000, tipo: "Nuraghe complesso" },
+  { nome: "Complesso Santa Vittoria", comune: "Serri", lat: 39.7100, lng: 9.1000, tipo: "Complesso cultuale" },
+  { nome: "Tomba dei Giganti Sa Domu e S’Orku", comune: "Siddi", lat: 39.6600, lng: 8.9000, tipo: "Tomba dei giganti" },
+  { nome: "Nuraghe Arrubiu", comune: "Orroli", lat: 39.6600, lng: 9.3000, tipo: "Nuraghe complesso" },
+  { nome: "Nuraghe Cuccurada", comune: "Mogoro", lat: 39.6600, lng: 8.7400, tipo: "Nuraghe" },
+  { nome: "Nuraghe Genna Maria", comune: "Villanovaforru", lat: 39.6300, lng: 8.8500, tipo: "Nuraghe" },
+  { nome: "Su Mulinu", comune: "Villanovafranca", lat: 39.6300, lng: 8.9900, tipo: "Nuraghe" },
+  { nome: "Sant’Anastasia", comune: "Sardara", lat: 39.6200, lng: 8.8200, tipo: "Pozzo sacro" },
+  { nome: "Funtana Coberta", comune: "Ballao", lat: 39.5800, lng: 9.3500, tipo: "Pozzo sacro" },
+  { nome: "Nuraghe Seruci", comune: "Gonnesa", lat: 39.2500, lng: 8.4200, tipo: "Nuraghe complesso" },
+  { nome: "Tomba dei Giganti Is Concias", comune: "Quartucciu", lat: 39.2600, lng: 9.3500, tipo: "Tomba dei giganti" },
+  { nome: "Nuraghe Diana", comune: "Quartu Sant’Elena", lat: 39.2300, lng: 9.2400, tipo: "Nuraghe" },
+  { nome: "Nuraghe Arresi", comune: "Sant’Anna Arresi", lat: 39.0000, lng: 8.6300, tipo: "Nuraghe" },
+  { nome: "Nuraghe Ponte", comune: "Dualchi", lat: 40.2300, lng: 8.9000, tipo: "Nuraghe" }
+];
 
-  if (mapInitialized) {
-    markers.forEach(({ marker, sito }) => {
-      marker.bindPopup(buildPopupHtml(sito));
-    });
-  }
-}
-
-function openMap() {
-  document.getElementById("home").style.display = "none";
-  document.getElementById("mappa").style.display = "block";
-  initMap();
-}
-
-function backHome() {
-  document.getElementById("mappa").style.display = "none";
-  document.getElementById("home").style.display = "block";
-}
-
-function cooprogetta() {
-  window.location.href =
-    "mailto:passamonti@passamonti.it?subject=Cooprogettazione%20I%20Giganti%20della%20Sardegna&body=Scrivi%20qui%20le%20tue%20idee...";
-}
-
-function slugify(title) {
-  return title
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
-    .replace(/’/g, "'")
-    .replace(/[^A-Za-z0-9 ]/g, " ")
-    .trim()
-    .replace(/\s+/g, "_");
-}
-
-function getWikiUrl(sito, lang) {
-  const slug = slugify(sito.nome);
-  return `https://${lang}.wikipedia.org/wiki/${slug}`;
-}
-
-function buildPopupHtml(sito) {
-  const t = translations[currentLang];
-  const wikiUrl = getWikiUrl(sito, currentLang);
-  return `
-    <div style="min-width:180px;">
-      <b><a href="${wikiUrl}" target="_blank" rel="noopener noreferrer" style="color:#ffd24a;text-decoration:none;">
-        ${sito.nome}
-      </a></b><br/>
-      <span>${sito.comune}</span><br/>
-      <a href="${wikiUrl}" target="_blank" rel="noopener noreferrer" style="color:#9fd3ff;font-size:11px;">
-        ${t.popupMore}
-      </a>
-    </div>
-  `;
-}
-
+/* ============================
+   MAPPA
+============================ */
 function initMap() {
   if (mapInitialized) return;
   mapInitialized = true;
@@ -365,10 +348,14 @@ function initMap() {
     })
       .addTo(mapInstance)
       .bindPopup(buildPopupHtml(sito));
+
     markers.push({ marker, sito });
   });
 }
 
+/* ============================
+   LINGUA DI DEFAULT
+============================ */
 document.querySelectorAll(".lang-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     const lang = btn.getAttribute("data-lang");
